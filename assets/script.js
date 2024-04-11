@@ -19,11 +19,11 @@ const slides = [
 ];
 console.log(slides);
 
-// gestion des fleches du carousel
+// gestion du carousel
 
 // Variables
 const divDots = document.querySelector(".dots");
-console.log(divDots);
+const dotsList = document.querySelectorAll(".dots .dot");
 let index = 0;
 const arrow_right = document.querySelector(".arrow_right");
 console.log(arrow_right);
@@ -31,20 +31,6 @@ const arrow_left = document.querySelector(".arrow_left");
 console.log(arrow_left);
 const img = document.querySelector(".banner-img");
 const text = document.querySelector(".tag-txt");
-// Affichage des dots
-
-function displayDots() {
-  for (let i = 0; i < slides.length; i++) {
-    const dot = document.createElement("div");
-    console.log(dot);
-    dot.classList.add("dot");
-    divDots.appendChild(dot);
-    if (i == index) {
-      dot.classList.add("dot_selected");
-    }
-  }
-}
-displayDots();
 
 // Affichage au click droit
 function clickRight() {
@@ -59,7 +45,7 @@ function clickRight() {
     }
     dotsList[index].classList.add("dot_selected");
     img.src = slides[index].image;
-    text.textContent = slides[index].tagLine;
+    text.innerHTML = slides[index].tagLine;
   });
 }
 clickRight();
@@ -78,10 +64,34 @@ function clickLeft() {
     }
     dotsList[index].classList.add("dot_selected");
     img.src = slides[index].image;
-    text.textContent = slides[index].tagLine;
+    text.innerHTML = slides[index].tagLine;
   });
 }
 clickLeft();
+
+// Pagination - dots
+
+function createPagination() {
+  for (let i = 0; i < slides.length; i++) {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    divDots.appendChild(dot);
+    if (i == index) {
+      dot.classList.add("dot_selected");
+    }
+
+    dot.addEventListener("click", () => {
+      console.log("click dot");
+      const dotsList = document.querySelectorAll(".dots .dot");
+      dotsList[index].classList.remove("dot_selected");
+      index = i;
+      dotsList[index].classList.add("dot_selected");
+      img.src = slides[index].image;
+      text.innerHTML = slides[index].tagLine;
+    });
+  }
+}
+createPagination();
 
 // fait avec farouk
 
